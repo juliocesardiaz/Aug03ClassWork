@@ -46,10 +46,7 @@ class Car
     {
       return $this->car_image;
     }
-    function displayCar()
-    {
-      echo "<img src="
-    }
+
 }
 
 $firstCar = new Car("Tesla X", 100000, 0, "pictures/tesla.jpg");
@@ -65,7 +62,7 @@ function searchCar($maxPrice, $maxMileage, $cars)
   {
     $price = $car->getPrice();
     $mileage = $car->getMiles();
-    if(($price <= $maxPrice) && ($price <= $maxMileage)) {
+    if(($price <= $maxPrice) && ($mileage <= $maxMileage)) {
       array_push($searchedCars, $car);
     }
   }
@@ -85,6 +82,11 @@ $matchingCars = searchCar($_GET["max_price"], $_GET["max_mileage"], $allCars);
     <h1>HERE ARE THE CARS YOU SEARCHED FOR</h1>
     <ul>
       <?php
-          foreach ($matchingCars as $result)
-
+          foreach ($matchingCars as $result) {
+            echo "<img src=" .  $result->getImage() . ">";
+            echo "<ul>" . $result->getMake() ."</ul>";
+            setlocale(LC_MONETARY, 'en_US');
+            echo "<ul>Price: " . money_format('%i', $result->getPrice()) . "</ul>";
+            echo "<ul>Mileage: " . number_format($result->getMiles()) . "</ul>";
+          }
       ?>
