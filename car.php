@@ -82,11 +82,15 @@ $matchingCars = searchCar($_GET["max_price"], $_GET["max_mileage"], $allCars);
     <h1>HERE ARE THE CARS YOU SEARCHED FOR</h1>
     <ul>
       <?php
-          foreach ($matchingCars as $result) {
-            echo "<img src=" .  $result->getImage() . ">";
-            echo "<ul>" . $result->getMake() ."</ul>";
-            setlocale(LC_MONETARY, 'en_US');
-            echo "<ul>Price: " . money_format('%i', $result->getPrice()) . "</ul>";
-            echo "<ul>Mileage: " . number_format($result->getMiles()) . "</ul>";
+        if (empty($matchingCars)) {
+          echo "<h2>There ain't no cars here.</h2>";
+        } else {
+            foreach ($matchingCars as $result) {
+              echo "<img src=" .  $result->getImage() . ">";
+              echo "<ul>" . $result->getMake() ."</ul>";
+              setlocale(LC_MONETARY, 'en_US');
+              echo "<ul>Price: " . money_format('%i', $result->getPrice()) . "</ul>";
+              echo "<ul>Mileage: " . number_format($result->getMiles()) . "</ul>";
+            }
           }
       ?>
